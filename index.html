@@ -4,19 +4,22 @@
   <title>Login Page</title>
   <style>
     body {
-      background: url("login-bg.jpg") no-repeat center center fixed;
+      background: url("back-ground3.jpg") no-repeat center center fixed;
       background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       font-family: Arial, sans-serif;
+      position: relative;
+      z-index: -1;
     }
-    
+
     .login-form {
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px); /* Frosted glass effect */
+      background-color: rgba(61, 61, 61, 0.3); /* Translucent background */
+      border-radius: 20px;
+      box-shadow: 5px 5px 5px 2px rgba(53, 53, 53, 0.5);
       text-align: center;
       padding: 40px;
       width: 320px;
@@ -35,13 +38,18 @@
       padding: 12px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 20px;
       box-sizing: border-box;
       background-repeat: no-repeat;
       background-position: 10px center;
       padding-left: 40px;
       background-color: #f9f9f9;
       background-size: 20px;
+    }
+    
+    .login-form h2 {
+      margin-top: 0;
+      color: rgb(253, 253, 253);
     }
     
     .login-form input[type="text"] {
@@ -53,48 +61,73 @@
     }
     
     .login-form button {
-      width: 100%;
-      padding: 12px;
-      background-color: #4CAF50;
+      width: auto;
+      padding: 12px 24px;
+      background-color: blue;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 20px;
       cursor: pointer;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Add box shadow effect */
+      transition: transform 0.3s ease-in-out; /* Add transition animation */
     }
     
     .login-form button:hover {
-      background-color: #45a049;
+      background-color: #003366;
+      transform: scale(1.05); /* Apply scale transformation on hover */
     }
     
     .error-message {
       color: red;
       margin-top: 10px;
+      opacity: 0;
+      animation: fadeIn 0.3s ease-in-out forwards;
+    }
+    
+    .error-message.show {
+      opacity: 1;
+      animation: none;
     }
     
     .forgot-password {
       margin-top: 10px;
+      text-align: right;
+      color: white;
     }
     
     .signup-link {
-      margin-top: 20px;
+      margin-top: auto;
       text-decoration: underline;
       cursor: pointer;
+      color: white;
+      align-self: flex-start;
+    }
+    
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 20px;
     }
   </style>
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
   <div class="login-form">
-    <img src="login-animation.gif" alt="Login Animation" width="100" height="100">
+    <img src="login-animation.gif" alt="Login Animation" width="150" height="150">
     <h2>Login</h2>
     <input type="text" id="username" placeholder="Username" autocomplete="off">
+    <p id="username-error" class="error-message"></p>
     <input type="password" id="password" placeholder="Password" autocomplete="off">
+    <p id="password-error" class="error-message"></p>
     <button onclick="validateLogin()">Login</button>
-    <p id="error-message" class="error-message"></p>
-    <a href="#" class="forgot-password" onclick="showForgotPasswordPrompt()">Forgot Password?</a>
-    <div class="signup-link" onclick="showSignupPrompt()">Sign Up</div>
+    <div class="footer">
+      <a href="#" class="forgot-password" onclick="showForgotPasswordPrompt()">Forgot Password?</a>
+      <div class="signup-link" onclick="showSignupPrompt()">Sign Up</div>
+    </div>
   </div>
 
   <script>
@@ -105,7 +138,13 @@
       var usernameRegex = /^[a-zA-Z0-9]{4,12}$/; // Regex to validate username: 4-12 characters, alphanumeric
       var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,12}$/; // Regex to validate password: at least 6 characters, one uppercase, one lowercase, one digit
       
-      if (usernameRegex.test(username) && passwordRegex.test(password)) {
+      var isUsernameValid = usernameRegex.test(username);
+      var isPasswordValid = passwordRegex.test(password);
+      
+      showErrorMessage('username-error', !isUsernameValid, "Invalid username.");
+      showErrorMessage('password-error', !isPasswordValid, "Invalid password.");
+      
+      if (isUsernameValid && isPasswordValid) {
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -126,8 +165,24 @@
             window.location.href = "welcome.html"; // Redirect to welcome page
           }
         });
+      }
+    }
+    
+    function showErrorMessage(elementId, condition, message) {
+      var element = document.getElementById(elementId);
+      
+      if (condition) {
+        element.textContent = message;
+        element.classList.add('show');
+        anime({
+          targets: element,
+          translateY: ['-10px', '0px'],
+          opacity: [0, 1],
+          easing: 'easeOutQuad',
+          duration: 300
+        });
       } else {
-        document.getElementById('error-message').textContent = "Invalid username or password.";
+        element.classList.remove('show');
       }
     }
     
@@ -154,8 +209,8 @@
         if (result.isConfirmed) {
           Swal.fire({
             icon: 'success',
-            title: 'Success!',
-            text: 'Password reset instructions sent to your email.',
+            title: 'Password Reset Email Sent!',
+            text: 'Please check your email for further instructions.'
           });
         }
       });
@@ -164,33 +219,45 @@
     function showSignupPrompt() {
       Swal.fire({
         title: 'Sign Up',
-        html: `
-          <input id="signup-email" class="swal2-input" type="email" placeholder="Email">
-          <input id="signup-password" class="swal2-input" type="password" placeholder="Password">
-        `,
+        html: 'Please enter your email and password:<br><br>' +
+              '<input type="email" id="signup-email" class="swal2-input" placeholder="Email" autocomplete="off">' +
+              '<input type="password" id="signup-password" class="swal2-input" placeholder="Password" autocomplete="off">',
         showCancelButton: true,
         confirmButtonText: 'Submit',
         cancelButtonText: 'Cancel',
+        focusConfirm: false,
         preConfirm: () => {
-          const email = document.getElementById('signup-email').value;
-          const password = document.getElementById('signup-password').value;
-          // Here you can handle the signup logic
-          // For demonstration purposes, we'll just show a success message
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({ email: email, password: password });
-            }, 2000);
-          });
-        },
-        allowOutsideClick: false
+          var email = document.getElementById('signup-email').value;
+          var password = document.getElementById('signup-password').value;
+          
+          var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex to validate email
+          var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,12}$/; // Regex to validate password: at least 6 characters, one uppercase, one lowercase, one digit
+          
+          var isEmailValid = emailRegex.test(email);
+          var isPasswordValid = passwordRegex.test(password);
+          
+          if (!isEmailValid) {
+            Swal.showValidationMessage('Invalid email.');
+          } else if (!isPasswordValid) {
+            Swal.showValidationMessage('Invalid password.');
+          }
+          
+          return {
+            email: email,
+            password: password
+          };
+        }
       }).then((result) => {
         if (result.isConfirmed) {
-          const email = result.value.email;
-          const password = result.value.password;
+          var email = result.value.email;
+          var password = result.value.password;
+          
+          // Here you can handle the signup logic
+          // For demonstration purposes, we'll just show a success message
           Swal.fire({
             icon: 'success',
-            title: 'Success!',
-            html: `Signup successful!<br>Email: ${email}<br>Password: ${password}`,
+            title: 'Sign Up Successful!',
+            text: 'Welcome, ' + email + '!'
           });
         }
       });

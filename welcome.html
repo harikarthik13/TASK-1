@@ -1,40 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Welcome</title>
+  <title>Welcome Page</title>
   <style>
     body {
       background-color: #f1f1f1;
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      font-family: Arial, sans-serif;
     }
     
     .welcome-message {
+      padding: 20px;
       background-color: #fff;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      padding: 40px;
       text-align: center;
-      width: 320px;
+      animation: showWelcome 1s forwards;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 40px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
     
-    .welcome-message h2 {
-      margin-top: 0;
-      color: #333;
+    @keyframes showWelcome {
+      0% {
+        width: 0;
+        opacity: 0;
+      }
+      100% {
+        width: 100%;
+        opacity: 1;
+      }
     }
     
-    .welcome-message p {
-      color: #777;
+    .letter {
+      display: inline-block;
+      color: transparent;
+      animation: showLetter 1s forwards;
+    }
+    
+    @keyframes showLetter {
+      0% {
+        color: transparent;
+        text-shadow: none;
+      }
+      100% {
+        color: #ff5500;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
     }
   </style>
 </head>
 <body>
   <div class="welcome-message">
-    <h2>Welcome!</h2>
-    <p>Thank you for logging in.</p>
+    <h2>
+      <span class="letter">W</span>
+      <span class="letter">e</span>
+      <span class="letter">l</span>
+      <span class="letter">c</span>
+      <span class="letter">o</span>
+      <span class="letter">m</span>
+      <span class="letter">e</span>
+      <span class="letter">!</span>
+    </h2>
   </div>
+
+  <script>
+    const letters = document.querySelectorAll('.letter');
+    let delay = 0;
+    
+    letters.forEach(letter => {
+      letter.style.animationDelay = delay + 's';
+      delay += 0.2;
+    });
+  </script>
 </body>
 </html>
+

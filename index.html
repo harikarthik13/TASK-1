@@ -91,6 +91,7 @@
     
     .forgot-password {
       margin-top: 10px;
+      font-family:'Times New Roman', Times, serif;
       text-align: right;
       color: white;
     }
@@ -98,6 +99,7 @@
     .signup-link {
       margin-top: auto;
       text-decoration: underline;
+      font-family:'Times New Roman', Times, serif;
       cursor: pointer;
       color: white;
       align-self: flex-start;
@@ -258,6 +260,8 @@
             icon: 'success',
             title: 'Sign Up Successful!',
             text: 'Welcome, ' + email + '!'
+          }).then(() => {
+            window.location.href = "welcome.html";
           });
         }
       });

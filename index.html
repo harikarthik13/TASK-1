@@ -71,7 +71,7 @@
       border: none;
       border-radius: 20px;
       cursor: pointer;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
       /* Add box shadow effect */
       transition: transform 0.3s ease-in-out;
       /* Add transition animation */
@@ -83,30 +83,27 @@
       /* Apply scale transformation on hover */
     }
 
-    .google-icon,
-    .twitter-icon,
-    .facebook-icon {
+     .signup-icon{
       margin-top: 30px;
-      margin-bottom:-30px;
+      margin-bottom: -30px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: black;
-      margin-left:50px;
+      margin-left: 40px;
       font-size: 12px;
     }
 
     .google-icon i,
     .twitter-icon i,
     .facebook-icon i {
-      margin-right: 10px;
-      margin-left:10px;
+      margin-left: 20px;
     }
 
     .google-icon:hover,
     .twitter-icon:hover,
     .facebook-icon:hover {
-      color: rgb(184, 184, 184);
+      color: rgb(210, 210, 210);
     }
 
     .error-message {
@@ -123,13 +120,15 @@
 
     .forgot-password {
       margin-top: 10px;
+      margin-left:-8px;
       font-family: 'Times New Roman', Times, serif;
       text-align: right;
       color: white;
     }
 
     .signup-link {
-      margin-top: auto;
+      margin-top: 8px;
+      margin-right:-3px;
       text-decoration: underline;
       font-family: 'Times New Roman', Times, serif;
       cursor: pointer;
@@ -164,10 +163,17 @@
     <div class="footer">
       <a href="#" class="forgot-password" onclick="showForgotPasswordPrompt()">Forgot Password?</a>
       <div class="signup-link" onclick="showSignupPrompt()">Sign Up</div>
+      <div class="signup-icon">
       <div class="google-icon">
         <i class="fab fa-google"></i> Google
+      </div>
+      <div class="google-icon">
         <i class="fab fa-twitter"></i> Twitter
+      </div>
+      <div class="google-icon">
         <i class="fab fa-facebook"></i> Facebook
+      </div>
+    </div>
     </div>
   </div>
 

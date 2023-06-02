@@ -1,65 +1,74 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Welcome Page</title>
   <style>
-    body {
-      background-color: #f1f1f1;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    
+   body {
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+
     .header-image {
-      width: 370px; /* Adjust the width as desired */
-      height: auto; /* Set height to auto */
-      margin-top: 20px; /* Adjust the margin-top as desired */
+      width: 370px;
+      /* Adjust the width as desired */
+      height: auto;
+      /* Set height to auto */
+      margin-top: 20px;
+      /* Adjust the margin-top as desired */
     }
-    
+
     .welcome-message {
       padding: 20px;
       text-align: center;
       overflow: hidden;
       white-space: nowrap;
-      font-size: 40px;
+      font-size: 50px;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
       animation: showWelcome 1s forwards;
-      margin-top: 20px; /* Adjust the margin-top as desired */
+      margin-top: 20px;
+      /* Adjust the margin-top as desired */
     }
-    
+
     @keyframes showWelcome {
       0% {
         width: 0;
         opacity: 0;
       }
+
       100% {
         width: 100%;
         opacity: 1;
       }
     }
-    
+
     .letter {
       display: inline-block;
       color: transparent;
       animation: showLetter 1s forwards;
     }
-    
+
     @keyframes showLetter {
       0% {
         color: transparent;
         text-shadow: none;
       }
+
       100% {
-        color: #ff5500;
+        color: #1c2ac8;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
       }
     }
   </style>
 </head>
+
 <body>
   <img class="header-image" src="welcome-image.gif" alt="Header Image">
   <div class="welcome-message">
@@ -77,12 +86,13 @@
 
   <script>
     const letters = document.querySelectorAll('.letter');
-    let delay = 0.5;
-    
+    let delay = 1.0;
+
     letters.forEach(letter => {
       letter.style.animationDelay = delay + 's';
       delay += 0.2;
     });
   </script>
 </body>
+
 </html>
